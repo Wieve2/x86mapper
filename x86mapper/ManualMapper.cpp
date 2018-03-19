@@ -5,7 +5,7 @@ void* ManualMapper::InjectDll(const std::string &_processName, const std::string
 	if (!std::experimental::filesystem::exists(_dllName))
 	{
 		std::cout << "File " << _dllName << " doesn't exist" << std::endl;
-		return false;
+		return nullptr;
 	}
 	
 	DWORD processId = gProcess.GetProcessIdByName(_processName);
@@ -13,7 +13,7 @@ void* ManualMapper::InjectDll(const std::string &_processName, const std::string
 	if (!processId)
 	{
 		std::cout << "Process " << _processName << " not found" << std::endl;
-		return false;
+		return nullptr;
 	}
 
 	HANDLE processHandle = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE | PROCESS_QUERY_INFORMATION, false, processId);
@@ -21,7 +21,7 @@ void* ManualMapper::InjectDll(const std::string &_processName, const std::string
 	if (!processHandle || processHandle == INVALID_HANDLE_VALUE)
 	{
 		std::cout << "Error: Failed to obtain handle to the process" << std::endl;
-		return false;
+		return nullptr;
 	}
 	
 	byte* rawImage = gFile.ReadToMemory(_dllName);
@@ -30,7 +30,7 @@ void* ManualMapper::InjectDll(const std::string &_processName, const std::string
 	{
 		std::cout << "Error: Failed to read " << _dllName << " to memory" << std::endl;
 		CloseHandle(processHandle);
-		return false;
+		return nullptr;
 	}
 
 	void* mappedImage = this->MapImageToProcess(processHandle, rawImage);
