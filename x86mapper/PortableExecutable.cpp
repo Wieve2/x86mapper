@@ -52,7 +52,7 @@ vecRelocs PortableExecutable::GetRelocs(void* _imageBase)
 	{
 		RelocInfo relocInfo;
 
-		relocInfo.adress = (byte*)_imageBase + baseRelocation->VirtualAddress;
+		relocInfo.address = (byte*)_imageBase + baseRelocation->VirtualAddress;
 		relocInfo.item = (WORD*)((byte*)baseRelocation + sizeof(IMAGE_BASE_RELOCATION));
 		relocInfo.count = (baseRelocation->SizeOfBlock - sizeof(IMAGE_BASE_RELOCATION)) / sizeof(WORD);
 

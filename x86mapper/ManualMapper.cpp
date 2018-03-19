@@ -98,7 +98,7 @@ void ManualMapper::ResolveRelocsbyDelta(vecRelocs _relocs, DWORD _delta)
 			WORD offset = reloc.item[i] & 0xFFF;
 
 			if (type == IMAGE_REL_BASED_HIGHLOW)
-				*(DWORD*)(reloc.adress + offset) += _delta;
+				*(DWORD*)(reloc.address + offset) += _delta;
 		}
 	}
 }

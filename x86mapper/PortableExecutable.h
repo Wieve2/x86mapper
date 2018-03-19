@@ -5,7 +5,7 @@
 
 struct RelocInfo
 {
-	byte* adress;
+	byte* address;
 	WORD* item;
 	int count;
 };
